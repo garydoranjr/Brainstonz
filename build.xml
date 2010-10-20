@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project Brainstonz">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <target name="init">
+        <mkdir dir="bin"/>
+    </target>
+    <target name="compile" depends="init">
+        <javac srcdir="src" destdir="bin"/>
+        <copy todir="bin/image/">
+            <fileset dir="src/image/">
+                <exclude name="*.java"/>
+            </fileset>
+        </copy>
+        <copy file="src/ai/TREE.DAT" todir="bin/ai/"/>
+        <copy file="src/gui/help.html" todir="bin/gui/" />
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target name="create_run_jar" depends="compile">
+        <jar destfile="Brainstonz.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Main-Class" value="main.Brainstonz"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="lib/squareness.jar"/>
+        </jar>
+    </target>
+</project>
